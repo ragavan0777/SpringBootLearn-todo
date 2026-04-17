@@ -1,149 +1,69 @@
-# 🚀 Spring Boot Todo API (Teaching Project)
+# 🚀 Spring Boot Todo API (Masterclass Edition)
 
-A complete, professional-grade Spring Boot application designed for teaching purposes. This project demonstrates modern best practices, including Layered Architecture, Security (JWT + RBAC), Database integration (MySQL), and Standardized API Responses.
+A professional-grade, distributed Spring Boot application designed to teach modern backend engineering. This project covers everything from **Stateless Authentication** to **Production Deployment**.
 
 ---
 
-## 📚 Features
+## 📖 Essential Documentation
+Follow these guides in order to master the project:
 
-*   **CRUD Operations**: Create, Read, Update, Delete Todos.
-*   **Authentication**: Secure Login & Registration using **JWT (JSON Web Tokens)**.
-*   **Authorization (RBAC)**:
-    *   **USER**: Can manage their *own* todos.
-    *   **ADMIN**: Can manage *all* todos and delete any todo.
-*   **Data Isolation**: Users cannot see or edit each other's data.
-*   **Validation**: Input validation (e.g., Title cannot be empty) with clean error messages.
-*   **Standardized Responses**: All API responses follow a consistent format (`success`, `message`, `data`).
-*   **Global Exception Handling**: Centralized error handling using `@ControllerAdvice`.
+### 🎓 For Students (The Roadmap)
+1. **[00: Student Learning Path](docs/00_Student_Learning_Path.md)** - Start here! A step-by-step guide to understanding the code layers.
+2. **[01: GitHub & Secrets Best Practice](docs/01_GitHub_and_Secrets_Best_Practice.md)** - Learn what to push to Git and how to keep passwords safe.
+3. **[02: Project Structure](docs/02_Project_Structure.md)** - A map of the folders and files.
+4. **[03: Code Best Practices](docs/03_Code_Best_Practices.md)** - Learn how to write clean, maintainable Java code.
+
+### 🛡️ Security & Identity
+- **[04: Security In-Depth](docs/04_Security_In_Depth.md)** - How we protect the API.
+- **[05: Auth & JWT Deep Dive](docs/05_Auth_Deep_Dive.md)** - Understanding Tokens and Roles.
+
+### 🚀 Operations & Deployment
+- **[Local Development Guide](docs/LOCAL_DEVELOPMENT_GUIDE.md)** - Run the app on your own computer.
+- **[Cloud Deployment Guide](docs/Step-by-Step_Deployment_Guide.md)** - Deploy to Render + TiDB Cloud for free.
+- **[Environment Variables Guide](docs/ENVIRONMENT_VARIABLES_EXPLAINED.md)** - Managing secrets in the cloud.
 
 ---
 
 ## 🛠️ Tech Stack
-
-*   **Java 21**
-*   **Spring Boot 3.x**
-*   **Spring Security** (JWT)
-*   **Spring Data JPA** (Hibernate)
-*   **MySQL** (Database)
-*   **Lombok** (Boilerplate reduction)
+- **Java 21** (LTS)
+- **Spring Boot 3.5.x**
+- **Spring Security** (Stateless JWT)
+- **Spring Data JPA** (Hibernate)
+- **MySQL / TiDB Cloud** (Distributed Database)
+- **Swagger/OpenAPI 3** (Interactive API Documentation)
 
 ---
 
-## 🚀 Getting Started
+## 🚦 Quick Start
 
-### 1. Prerequisites
-*   Java 21 installed.
-*   MySQL installed and running.
-*   Maven installed (or use `mvnw`).
-
-### 2. Database Setup
-Create a database named `todo_db` in MySQL:
-```sql
-CREATE DATABASE todo_db;
-```
-*Note: The application will automatically create the tables (`users`, `todos`) on the first run.*
-
-### 3. Configuration
-Check `src/main/resources/application.properties` and update your MySQL username/password if needed:
-```properties
-spring.datasource.username=root
-spring.datasource.password=your_password
-```
-
-### 4. Run the Application
+### 1. Run Locally
 ```bash
 ./mvnw spring-boot:run
 ```
-The server will start on **port 5000**.
+👉 Access the **Interactive Dashboard** at: [http://localhost:5000/](http://localhost:5000/)
+
+### 2. View API Documentation
+Once the app is running, visit: [http://localhost:5000/swagger-ui/index.html](http://localhost:5000/swagger-ui/index.html)
+
+### 3. Connection Health
+Check if the database is connected: [http://localhost:5000/api/health](http://localhost:5000/api/health)
 
 ---
 
-## 🧪 Testing the API
-
-### 1. Register a User
-**POST** `http://localhost:5000/api/auth/register`
-```json
-{
-  "username": "john_doe",
-  "password": "password123"
-}
-```
-
-### 2. Register an Admin (Optional)
-**POST** `http://localhost:5000/api/auth/register`
-```json
-{
-  "username": "admin_user",
-  "password": "password123",
-  "role": "ADMIN"
-}
-```
-
-### 3. Login
-**POST** `http://localhost:5000/api/auth/login`
-```json
-{
-  "username": "john_doe",
-  "password": "password123"
-}
-```
-*Response:*
-```json
-{
-  "success": true,
-  "message": "Login successful",
-  "data": {
-    "token": "eyJhbGciOiJIUzI1NiJ9..."
-  }
-}
-```
-**Copy the token!**
-
-### 4. Create a Todo
-**POST** `http://localhost:5000/api/v1/todos/create`
-*   **Header**: `Authorization: Bearer <YOUR_TOKEN>`
-*   **Body**:
-    ```json
-    {
-      "title": "Learn Spring Boot",
-      "description": "Master the basics of REST APIs"
-    }
-    ```
-
-### 5. Get All Todos
-**GET** `http://localhost:5000/api/v1/todos/all`
-*   **Header**: `Authorization: Bearer <YOUR_TOKEN>`
+## 🧪 Admin Credentials (Demo)
+By default, the application allows anyone to register. To test **ADMIN-only** features (like deleting any todo):
+1. Register a user with the role `ADMIN`.
+2. Use the generated token in the `Authorization` header.
 
 ---
 
-## 📂 Project Structure
-
-```text
-com.example.startSpring
-│
-├── config/              # Security & App Config
-├── controller/          # API Endpoints (The Waiter)
-├── service/             # Business Logic (The Chef)
-├── repository/          # Database Access (The Pantry)
-├── model/               # Database Entities (The Ingredients)
-├── dto/                 # Data Transfer Objects (The Menu)
-├── exception/           # Global Error Handling
-└── security/            # JWT Logic
-```
-
-See `Project_Structure_Explained.md` for a detailed breakdown.
-
----
-
-## 📖 Documentation & Guides
-
-*   [Project Structure Explained](Project_Structure_Explained.md)
-*   [Security Guide (JWT & RBAC)](Security_Guide.md)
-*   [Authentication & Authorization Guide](Authentication_Authorization_Guide.md)
-*   [Spring Boot Cheat Sheet](Spring_Boot_Cheat_Sheet.md)
-*   [Best Practices Guide](Todo_App_Best_Practices_Guide.md)
+## 📚 Reference Library
+- **[Annotation Glossary](docs/reference/Annotation_Glossary.md)**
+- **[Core Concepts](docs/reference/Core_Concepts.md)**
+- **[Properties Reference](docs/reference/Properties_Guide.md)**
+- **[Cheat Sheet](docs/99_Cheat_Sheet.md)**
 
 ---
 
 ## 📝 License
-This project is for educational purposes. Feel free to use it to teach or learn!
+This project is for educational purposes. 🌟 **Leave a star** if you found it helpful!
